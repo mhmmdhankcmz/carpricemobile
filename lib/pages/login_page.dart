@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../widgets/button.dart';
-import '../widgets/square_tile.dart';
 import '../widgets/textfield.dart';
 
 class LoginPage extends StatefulWidget {
@@ -132,11 +131,11 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             Icon(Icons.person_add_alt,color: Colors.grey.shade400,),
                             const SizedBox(width: 10,),
-                            Text("Sign Up",style: Theme.of(context).textTheme.titleSmall,),
+                            Text("Üye Ol",style: Theme.of(context).textTheme.titleSmall,),
                           ],),
                       ),
                     ),
-                    TextButton.icon(label: Text("Üye olmadan devam et",style: GoogleFonts.almendra(fontSize: 20,color: Colors.yellow.shade300),) ,onPressed: () {
+                    TextButton.icon(label: Text("Giriş Yapmadan devam et",style: GoogleFonts.acme(fontSize: 20,color: Colors.yellow.shade300),) ,onPressed: () {
                       Navigator.pushNamed(context, '/home');
                     },icon: const Icon(Icons.home,size: 50,color: Colors.black45,),),
                   ],

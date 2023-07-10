@@ -17,6 +17,18 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   bool listType = false;
   List veriList = [];
+  late bool login ;
+
+  bool loggedIn(){
+    if(user == null){
+      login = false;
+      return false;
+    }else{
+      login = true;
+      return true;
+    }
+  }
+
 
   var user = FirebaseAuth.instance.currentUser?.email;
   var us = FireStoreDB().user;
@@ -60,25 +72,27 @@ class _FavoritePageState extends State<FavoritePage> {
                                     veriList[index]["Marka"] ?? " boş",
                                     style: GoogleFonts.farro(fontSize: 18,color: Colors.yellow.shade300),
                                   ),
-                                  trailing: IconButton(
-                                      onPressed: () {
-                                        var fav = FirebaseFirestore.instance
-                                            .collection('Favoriler');
-                                        var user = FirebaseAuth.instance.currentUser;
-                                        var aracId = veriList[index]["AracID"];
+                                  trailing: Visibility(visible: loggedIn(),
+                                    child: IconButton(
+                                        onPressed: () {
+                                          var fav = FirebaseFirestore.instance
+                                              .collection('Favoriler');
+                                          var user = FirebaseAuth.instance.currentUser;
+                                          var aracId = veriList[index]["AracID"];
 
-                                        fav.doc("${user?.uid}$aracId").delete().then(
-                                            (value) =>
-                                                print("${user!.uid}$aracId silindi"));
-                                        setState(() {});
-                                      },
-                                      icon: const Icon(CupertinoIcons.delete_simple)),
+                                          fav.doc("${user?.uid}$aracId").delete().then(
+                                              (value) =>
+                                                  print("${user!.uid}$aracId silindi"));
+                                          setState(() {});
+                                        },
+                                        icon: const Icon(CupertinoIcons.delete_simple)),
+                                  ),
                                   onTap: () {
                                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ProductDetails(aracID: veriList[index]["AracID"], vehicleType: veriList[index]["VasitaTipi"], caseType: veriList[index]["KasaTipi"], name: veriList[index]["Marka"], model: veriList[index]["Model"], imagePath: veriList[index]["AracResimUrl"], description: veriList[index]["AracOzellikleri"], price: veriList[index]["AracFiyat"], isLiked: veriList[index]["isLiked"], likeCount: veriList[index]["likeCount"])), (route) => false);
                                   },
                                   subtitle: RichText(text: TextSpan(text: "${veriList[index]["Model"]} \n",style:GoogleFonts.saira(fontSize: 18,color: Colors.grey),children: [
-                                    TextSpan(text: "Toplam Beğeni ${veriList[index]["likeCount"]}",style: GoogleFonts.eagleLake(fontSize: 10,color: Colors.lightBlue.shade700)),
-                                    TextSpan(text:" \n ${veriList[index]["AracFiyat"].toString().substring(0,aracFiyat.toString().length - 3)} ",style: GoogleFonts.arya(fontSize: 16,color: Colors.redAccent.shade200))])),
+                                    TextSpan(text: "Favorileyen Sayısı ${veriList[index]["likeCount"]}",style: GoogleFonts.acme(fontSize: 12,color: Colors.cyanAccent.shade200)),
+                                    TextSpan(text:" \n ${veriList[index]["AracFiyat"].toString().substring(0,aracFiyat.toString().length )} ",style: GoogleFonts.arya(fontSize: 16,color: Colors.redAccent.shade200))])),
 
                                 ),
                         );

@@ -2,6 +2,7 @@ import 'package:carpricemobile/design_config/padding_all25.dart';
 import 'package:carpricemobile/services/auth_service.dart';
 import 'package:carpricemobile/services/validators.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../widgets/button.dart';
 import '../widgets/textfield.dart';
 
@@ -81,7 +82,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: const EdgeInsets.only(top: 5.0),
                           child: RichText(text: const TextSpan(text: 'Zaten Üyemisin? ',children: [TextSpan(text: ' Giriş Yap',style: TextStyle(fontSize: 20,decoration: TextDecoration.underline))])),
                         ),
-                      )
+                      ),
+                      TextButton.icon(label: Text("Giriş Yapmadan devam et",style: GoogleFonts.acme(fontSize: 20,color: Colors.yellow.shade300),) ,onPressed: () {
+                        Navigator.pushNamed(context, '/home');
+                      },icon: const Icon(Icons.home,size: 50,color: Colors.black45,),),
                     ],
                   ),
                 ),),
