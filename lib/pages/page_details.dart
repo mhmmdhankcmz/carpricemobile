@@ -80,6 +80,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         setState(() {
           widget.isLiked = false;
           widget.likeCount--;
+          deleteToFav();
           addVehiclesFavorite.doc(widget.aracID).set(
               {'isLiked': widget.isLiked, 'likeCount': widget.likeCount},
               SetOptions(
@@ -90,7 +91,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       });
 
 
-    deleteToFav();
+
 
   }
 
@@ -165,16 +166,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                           GestureDetector(
                             onTap:deleteToFavorite,
                               child: Badge(
-                                isLabelVisible: widget.likeCount == 1 || widget.likeCount >= 1,
+                                // isLabelVisible: widget.likeCount == 1 || widget.likeCount >= 1,
                               largeSize: 10,
                                 smallSize: 10,
                                 alignment: AlignmentDirectional.topStart,
                                 backgroundColor: Colors.orange,
                                 label: Text("${widget.likeCount}"),
-                                child: Icon(widget.likeCount ==1 || widget.likeCount >=1 ? Icons.favorite : Icons.mood_bad,
-                                  size: 40,
-                                  color: Colors.red.shade600,
-                                )),
+                                child:widget.likeCount ==1 || widget.likeCount >=1 ? Icon(Icons.favorite, size: 40, color: Colors.red.shade600)
+                                    :
+                                Icon(Icons.mood_bad, size: 40, color: Colors.blue.shade800,)
+                              ),
                           ),
                         ],
                       ),
