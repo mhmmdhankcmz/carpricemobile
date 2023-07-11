@@ -51,8 +51,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   Future<void> addToFavorite() async {
       widget.isLiked = true;
 
+
     addFavorite.doc("${user?.uid}${widget.aracID}").set({'AracID': widget.aracID, 'FavID': addFavorite.id + user!.uid, 'UserEmail': user!.email, 'UserID': user!.uid, 'AracResimUrl': widget.imagePath, 'AracFiyat': widget.price, 'AracOzellikleri':widget.description,
-      'Marka': widget.name, 'Model': widget.model, 'KasaTipi': widget.caseType, 'VasitaTipi': widget.vehicleType, 'likeCount':widget.likeCount, 'isLiked': true,
+      'Marka': widget.name, 'Model': widget.model, 'KasaTipi': widget.caseType, 'VasitaTipi': widget.vehicleType, 'isLiked': widget.isLiked,
     }).then((value) {
       setState(() {
         widget.isLiked = true;
@@ -69,7 +70,13 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   Future deleteToFavorite() async {
+
       addFavorite.doc("${user?.uid}${widget.aracID}").delete().then((value) {
+        if(widget.likeCount== 0 || widget.likeCount <= 0){
+          widget.isLiked = false;
+        }else{
+          widget.isLiked = true;
+        }
         setState(() {
           widget.isLiked = false;
           widget.likeCount--;
@@ -81,7 +88,10 @@ class _ProductDetailsState extends State<ProductDetails> {
         });
         print("foviri silindi");
       });
+
+
     deleteToFav();
+
   }
 
   @override
@@ -161,7 +171,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 alignment: AlignmentDirectional.topStart,
                                 backgroundColor: Colors.orange,
                                 label: Text("${widget.likeCount}"),
-                                child: Icon(widget.likeCount ==1 || widget.likeCount >=1 ? Icons.favorite : Icons.favorite_border,
+                                child: Icon(widget.likeCount ==1 || widget.likeCount >=1 ? Icons.favorite : Icons.mood_bad,
                                   size: 40,
                                   color: Colors.red.shade600,
                                 )),
@@ -202,7 +212,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   void addToFav() async {
     await Fluttertoast.showToast(
-        msg: "Favorilerine Eklendi :)",
+        msg: "Favorilerine Eklendi",
         // webBgColor: "linear-gradient(to right, #2DE5E5, #2DE5E5)",
         fontSize: 15,
         webPosition: "center");
@@ -211,7 +221,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   void deleteToFav() async {
     await Fluttertoast.showToast(
-        msg: "Favori Silindi :)",
+        msg: "Favori Silindi",
         // webBgColor: "linear-gradient(to right, #2DE5E5, #2DE5E5)",
         timeInSecForIosWeb: 2,
         fontSize: 15,
