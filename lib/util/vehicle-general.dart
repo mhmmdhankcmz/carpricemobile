@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carpricemobile/pages/page_details.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class CoffeeTile extends StatelessWidget {
+class VehicleGeneral extends StatelessWidget {
   final String carImagePath;
   final String vehicleType;
   final String caseType;
@@ -19,7 +17,7 @@ class CoffeeTile extends StatelessWidget {
 
 
 
-  CoffeeTile({super.key, required this.carDescription,required this.carImagePath, required this.carName,required this.carPrice, required this.carModel, required this.vehicleType, required this.caseType, required this.aracID,required this.isLiked,required this.likeCount});
+  VehicleGeneral({super.key, required this.carDescription,required this.carImagePath, required this.carName,required this.carPrice, required this.carModel, required this.vehicleType, required this.caseType, required this.aracID,required this.isLiked,required this.likeCount});
 
 
   @override
@@ -37,7 +35,7 @@ class CoffeeTile extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: RichText(text: TextSpan(text:carName.toUpperCase(),style: Theme.of(context).textTheme.labelMedium,children: [ TextSpan(text:" ${carModel.toUpperCase()}",style: Theme.of(context).textTheme.labelSmall)]),),
+                child: RichText(text: TextSpan(text:carName.toUpperCase(),style: Theme.of(context).textTheme.bodyLarge,children: [ TextSpan(text:" ${carModel.toUpperCase()}",style: Theme.of(context).textTheme.bodyMedium)]),),
               ),
               // Padding(
               //   padding: const EdgeInsets.all(5.0),
@@ -68,11 +66,11 @@ class CoffeeTile extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(2),
-                      child: RichText(text: TextSpan(text:"$carPrice ",style: GoogleFonts.ubuntu(fontSize: 14 ,color: Colors.yellow.shade800,fontWeight: FontWeight.bold))),
+                      child: RichText(text: TextSpan(text:"$carPrice ",style: Theme.of(context).textTheme.labelMedium,)),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(2),
-                      child: Container(decoration: BoxDecoration(color:Theme.of(context).scaffoldBackgroundColor ,borderRadius: BorderRadius.circular(8)),height: 15,width: 15, child: Center(child: Text(caseType,style: TextStyle(fontSize: 13,color: Colors.yellow.shade400,),))),
+                      child: Container(decoration: BoxDecoration(color:Theme.of(context).scaffoldBackgroundColor ,borderRadius: BorderRadius.circular(8)),height: 15,width: 15, child: Center(child: Text(caseType,style: Theme.of(context).textTheme.labelMedium,))),
                     ),
                   ],
                 ),

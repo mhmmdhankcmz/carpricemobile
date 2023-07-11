@@ -26,7 +26,7 @@ class MyTextfield extends StatelessWidget {
           LengthLimitingTextInputFormatter(maxLenghts),
         ],
         textInputAction:textInputAction,
-        style: const TextStyle(fontSize: 13),
+        style: Theme.of(context).textTheme.labelMedium,
         controller: controller,
         autovalidateMode: autoValidate,
         keyboardType: keyboardType,
@@ -34,7 +34,7 @@ class MyTextfield extends StatelessWidget {
         maxLength: maxLenghts,
         decoration: InputDecoration(
           suffixIcon: iconButtons,
-            hintText: hinText,hintStyle: const TextStyle(fontSize: 15),
+            hintText: hinText,hintStyle: Theme.of(context).textTheme.labelMedium,
             focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey)),
             enabledBorder:

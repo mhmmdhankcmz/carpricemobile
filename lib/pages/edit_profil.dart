@@ -5,7 +5,6 @@ import 'package:carpricemobile/widgets/button.dart';
 import 'package:carpricemobile/widgets/my_appbar.dart';
 import 'package:carpricemobile/widgets/textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/profile_widget.dart';
 
@@ -58,11 +57,11 @@ class _EditProfileState extends State<EditProfile> {
                   child: Column(
             children: [
                   Container(alignment: AlignmentDirectional.center, height: 30,width: width,decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(5)),border: Border.all(color: Colors.green)),
-                      child: Text("Bilgilerimi Güncelle",style: GoogleFonts.arvo(color: Colors.green,fontSize: 20,fontWeight: FontWeight.bold,letterSpacing: 2),)),
+                      child: Text("Bilgilerimi Güncelle",style: Theme.of(context).textTheme.headlineSmall,)),
                   ProfileWidget(imageUrl: widget.imageUrl,),
                   const Divider(),
-                  Text(widget.gelenAdSoyad,style:GoogleFonts.antic(color: Colors.lightGreen)),
-                  Text(widget.gelenEmail,style: GoogleFonts.antic(color: Colors.orangeAccent),),
+                  Text(widget.gelenAdSoyad,style:Theme.of(context).textTheme.bodyMedium),
+                  Text(widget.gelenEmail,style: Theme.of(context).textTheme.bodyLarge,),
                   // Text(widget.gelenTelefon),
                   MyTextfield(iconButtons: const Icon(Icons.edit), controller: adSoyad,hinText:"ad soyad", obscureText: false, validate: (validate){
                     return null;

@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 
@@ -30,10 +29,10 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget{
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(onTap: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>const ProfilPage()));
-          },child: RichText(text:  TextSpan(style: GoogleFonts.saira(color: CupertinoColors.white,fontSize: 15),text:user?.displayName ?? "",), selectionColor: Colors.red , overflow: TextOverflow.ellipsis, softWrap: false, )),
+          },child: RichText(text:  TextSpan(style: Theme.of(context).textTheme.bodyMedium,text:user?.displayName ?? "",), selectionColor: Colors.red , overflow: TextOverflow.ellipsis, softWrap: false, )),
         ),
         Consumer(builder: (context, value, child) {
-          return TextButton.icon( label: Text(user == null ? "Giriş Yap" : "Çıkış yap",style: GoogleFonts.habibi(fontSize: 8,),),onPressed: () async{
+          return TextButton.icon( label: Text(user == null ? "Giriş Yap" : "Çıkış yap",style: Theme.of(context).textTheme.labelSmall,),onPressed: () async{
             if(user == null){
               Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => true);
             }else{

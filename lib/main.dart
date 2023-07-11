@@ -7,6 +7,7 @@ import 'package:carpricemobile/services/auth_service.dart';
 import 'package:carpricemobile/services/firestore_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 
@@ -30,57 +31,37 @@ class MyApp extends StatelessWidget {
         title: 'CarPrice',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          brightness: Brightness.dark,
-          primarySwatch: Colors.orange,
+            brightness: Brightness.dark,
+            primaryColor: Colors.lightBlue[800],
+
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
               selectedItemColor: Colors.yellow,
-              selectedLabelStyle: TextStyle(color: Colors.grey),
+              selectedLabelStyle: TextStyle(color: Colors.pink),
               unselectedItemColor: Colors.grey,
-              unselectedLabelStyle: TextStyle(color: Colors.yellow)),
-          textTheme: TextTheme(
-
-            bodyLarge: const TextStyle(
-                color: Colors.yellow, fontSize: 30, fontWeight: FontWeight.bold),
-            bodyMedium: const TextStyle(
-                color: Colors.yellow, fontSize: 20, fontWeight: FontWeight.bold),
-            bodySmall: const TextStyle(
-                color: Colors.grey, fontSize: 15, fontWeight: FontWeight.bold),
-            titleSmall: TextStyle(
-                color: Colors.grey.shade400,
-                fontSize: 18,
-                fontWeight: FontWeight.bold),
-            titleMedium: TextStyle(
-                color: Colors.grey.shade400,
-                fontSize: 28,
-                fontWeight: FontWeight.bold),
-            titleLarge: TextStyle(
-                color: Colors.grey.shade400,
-                fontSize: 38,
-                fontWeight: FontWeight.bold),
-            labelSmall: TextStyle(
-                color: Colors.yellow.shade600,
-                fontSize: 10,
-                fontWeight: FontWeight.bold),
-            labelMedium: const TextStyle(
-                color: Colors.white70,
-                fontSize: 13,
-                fontWeight: FontWeight.bold),
-            labelLarge: TextStyle(
-                color: Colors.grey.shade300,
-                fontSize: 18,
-                fontWeight: FontWeight.bold),
-            headlineLarge: const TextStyle( color: Colors.pink,fontSize: 9),
-            headlineMedium: const TextStyle(color: Colors.pink,fontSize: 7),
-            headlineSmall: const TextStyle(color: Colors.pink,fontSize: 5),
+              unselectedLabelStyle: TextStyle(color: Colors.yellow)
           ),
+        textTheme: GoogleFonts.acmeTextTheme().copyWith(
+              bodySmall: GoogleFonts.acme(fontSize: 10),
+              bodyMedium: GoogleFonts.acme(fontSize: 15),
+              bodyLarge: GoogleFonts.acme(fontSize: 20),
+              titleSmall: GoogleFonts.acme(fontSize: 15),
+              titleMedium:  GoogleFonts.acme(fontSize: 20),
+              titleLarge:  GoogleFonts.acme(fontSize: 25),
+              labelSmall:  GoogleFonts.acme(fontSize: 8),
+              labelMedium:  GoogleFonts.acme(fontSize: 12),
+              labelLarge:  GoogleFonts.acme(fontSize: 15),
+              headlineSmall:  GoogleFonts.acme(fontSize: 25),
+              headlineMedium:  GoogleFonts.acme(fontSize: 30),
+              headlineLarge:  GoogleFonts.acme(fontSize: 35),
+        ),
           scaffoldBackgroundColor: Colors.grey.shade600,
         ),
         routes: {
-          '/home': (context) => const Home(),
-          '/login': (context) =>  const LoginPage(),
-          '/forgotPass': (context) =>  const ForgotPassword(),
-          '/register': (context) =>  const RegisterPage(),
-          '/favoriler': (context)=> const FavoritePage(),
+              '/home': (context) => const Home(),
+              '/login': (context) =>  const LoginPage(),
+              '/forgotPass': (context) =>  const ForgotPassword(),
+              '/register': (context) =>  const RegisterPage(),
+              '/favoriler': (context)=> const FavoritePage(),
 
         },
         // initialRoute: '/home',

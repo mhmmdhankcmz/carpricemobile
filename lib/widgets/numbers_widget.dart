@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class NumbersWidget extends StatelessWidget {
   int rakam;
@@ -29,7 +28,7 @@ class NumbersWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          RichText(text: TextSpan(text: "Favori ",style: GoogleFonts.arya(fontSize: 20),children: [TextSpan(text: rakam.toString(),style: GoogleFonts.arya(fontSize: 22))])),
+          RichText(text: TextSpan(text: "Favori ",style: Theme.of(context).textTheme.bodyMedium,children: [TextSpan(text: rakam.toString(),style:Theme.of(context).textTheme.bodyMedium)])),
           const SizedBox(height: 2,),
         ],
       ),

@@ -49,7 +49,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       },
                         child: Padding(
                           padding: const EdgeInsets.only(top: 5.0),
-                          child: RichText(text: const TextSpan(text: 'Şifreni Hatırladın mı? ',children: [TextSpan(text: ' Giriş Yap',style: TextStyle(fontSize: 20,decoration: TextDecoration.underline))])),
+                          child: RichText(text:  TextSpan(text: 'Şifreni Hatırladın mı? ',children: [TextSpan(text: ' Giriş Yap',style: Theme.of(context).textTheme.headlineSmall)])),
                         ),
                       )
                     ],

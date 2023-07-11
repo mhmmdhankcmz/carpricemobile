@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../widgets/button.dart';
 import '../widgets/textfield.dart';
@@ -57,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     const Icon(Icons.lock,size: 90,color: Colors.black54,),
                     sizedBox30(),
-                    Text("Hoşgeldiniz",style: GoogleFonts.asap(fontSize: 22)),
+                    Text("Hoşgeldiniz",style: Theme.of(context).textTheme.headlineMedium),
                     sizedBox30(),
                     MyTextfield(controller: emailController, hinText: hintEmail, obscureText: false,iconButtons: const Icon(Icons.email), validate:Validators().validateEmail, autoValidate: AutovalidateMode.onUserInteraction, keyboardType: TextInputType.emailAddress, textInputAction: TextInputAction.next, maxLenghts: 50,),
                     const SizedBox(height: 25,),
@@ -135,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                           ],),
                       ),
                     ),
-                    TextButton.icon(label: Text("Giriş Yapmadan devam et",style: GoogleFonts.acme(fontSize: 20,color: Colors.yellow.shade300),) ,onPressed: () {
+                    TextButton.icon(label: Text("Giriş Yapmadan devam et",style: Theme.of(context).textTheme.bodyLarge,) ,onPressed: () {
                       Navigator.pushNamed(context, '/home');
                     },icon: const Icon(Icons.home,size: 50,color: Colors.black45,),),
                   ],

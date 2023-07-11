@@ -2,7 +2,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carpricemobile/services/auth_service.dart';
 import 'package:carpricemobile/services/firestore_service.dart';
-import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 class ProfileWidget extends StatefulWidget {
@@ -55,7 +54,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       onTap: () async{
         showDialog(context: context, builder: (context) {
           return SimpleDialog(
-            title: const Text("Profil Resmi Seç",style: TextStyle(fontSize: 20),),
+            title:  Text("Profil Resmi Seç",style: Theme.of(context).textTheme.bodyMedium,),
             backgroundColor: Colors.black54,
             shadowColor: Colors.yellow,elevation: 50,
             children: [

@@ -35,15 +35,14 @@ class _HomeState extends State<Home> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-            selectedItemColor: Colors.orange,
-            unselectedItemColor: Colors.grey,
+
             currentIndex: selectedIndex,
             showSelectedLabels: true,
             onTap: (index)=>setState(()=>selectedIndex=index),
-            items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home,color: selectedIndex==0 ? Colors.deepOrangeAccent :Colors.grey,),label: 'Anasayfa'),
-              BottomNavigationBarItem(icon: Icon(Icons.favorite,color: selectedIndex==1 ? Colors.deepOrangeAccent :Colors.grey,),label: 'Favoriler'),
-              BottomNavigationBarItem(icon: Icon(Icons.person_rounded,color: selectedIndex==2 ? Colors.deepOrangeAccent :Colors.grey,),label: 'Profil'),
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home,),label: 'Anasayfa'),
+              BottomNavigationBarItem(icon: Icon(Icons.favorite,),label: 'Favoriler'),
+              BottomNavigationBarItem(icon: Icon(Icons.person_rounded,),label: 'Profil'),
             ]
         ),
       ),

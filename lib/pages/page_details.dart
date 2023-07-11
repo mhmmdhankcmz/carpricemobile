@@ -145,14 +145,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                     RichText(
                       text: TextSpan(
                           text: "${widget.vehicleType} ",
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: Theme.of(context).textTheme.bodyMedium,
                           children: [TextSpan(text: widget.caseType)]),
                     ),
                     divider(),
                     RichText(
                         text: TextSpan(
                             text: widget.description,
-                            style:const TextStyle(fontSize: 10))),
+                            style: Theme.of(context).textTheme.bodySmall)),
                     divider(),
                     Padding(
                       padding: const EdgeInsets.only(

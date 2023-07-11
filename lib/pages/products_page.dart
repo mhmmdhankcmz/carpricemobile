@@ -1,13 +1,13 @@
 import 'package:carpricemobile/design_config/padding_only_right.dart';
 import 'package:carpricemobile/pages/page_details.dart';
 import 'package:carpricemobile/services/firestore_service.dart';
-import 'package:carpricemobile/util/coffe_type.dart';
+import 'package:carpricemobile/util/arac-marka.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../design_config/page_padding_top_right.dart';
 import '../models/vehicles_model.dart';
-import '../util/coffe_tile.dart';
+import '../util/vehicle-general.dart';
 
 class ProductsPage extends StatefulWidget {
   Vehicles? model;
@@ -85,7 +85,7 @@ class _ProductsPageState extends State<ProductsPage> {
                               onTap: () => setState(() => isSearch = !isSearch),
                               child: const Icon(Icons.visibility_off)),
                           hintText: "Find your Car..",
-                          hintStyle: const TextStyle(fontSize: 10),
+                          hintStyle: Theme.of(context).textTheme.labelMedium,
 
                           focusedBorder: OutlineInputBorder(
                               borderSide:
@@ -128,7 +128,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       scrollDirection: Axis.horizontal,
                       itemCount: veriList.length,
                       itemBuilder: (context, index) {
-                        return CoffeType(
+                        return Marka(
                             isSelected: true,
                             coffeType: veriList[index]["MarkaAdi"],
                             onTap: () {
@@ -163,11 +163,11 @@ class _ProductsPageState extends State<ProductsPage> {
                         widget.model = Vehicles.fromJson(snapshot.data.docs[index].data() as Map<String, dynamic>);
                         var mod = widget.model;
                         return Card(
-                          child: CupertinoListTile(additionalInfo: Text("${mod?.id}",style: const TextStyle(fontSize: 6),),
+                          child: CupertinoListTile(additionalInfo: Text("${mod?.kasaTipi}",style: Theme.of(context).textTheme.labelSmall,),
                             leading: CircleAvatar(backgroundImage: NetworkImage(mod!.imageUrl!),),
-                            title: Text(mod.marka!,style:const TextStyle(fontSize: 12)),
-                            subtitle:  Text(mod.model!,style:const TextStyle(fontSize: 10),),
-                            trailing: Text(mod.fiyat!.toString().substring(0,mod.fiyat.toString().length - 3),style:const TextStyle(fontSize: 10),),
+                            title: Text(mod.marka!,style:Theme.of(context).textTheme.bodyLarge),
+                            subtitle:  Text(mod.model!,style:Theme.of(context).textTheme.bodyMedium,),
+                            trailing: Text(mod.fiyat!.toString().substring(0,mod.fiyat.toString().length - 3),style:Theme.of(context).textTheme.bodyMedium,),
                             onTap: (){
                             setState(() {
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetails(aracID: "${mod.id}", vehicleType: "${mod.vasitaTipi}", caseType: "${mod.kasaTipi}",
@@ -188,8 +188,8 @@ class _ProductsPageState extends State<ProductsPage> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text("Arama yapmak için arama çubuğuna birşeyler girin  ",style: TextStyle(fontSize: 10),),
+                          children:  [
+                            Text("Arama yapmak için arama çubuğuna birşeyler girin  ",style: Theme.of(context).textTheme.labelMedium,),
                           ],
                         ));
                 }
@@ -215,7 +215,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2),
                       itemBuilder: (context, index) {
-                        return CoffeeTile(
+                        return VehicleGeneral(
                           carDescription: dataList[index]["AracOzellikleri"],
                           carImagePath: dataList[index]["aracResimUrl"],
                           carName:dataList[index]["Marka"] ,

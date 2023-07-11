@@ -1,6 +1,5 @@
 import 'package:carpricemobile/services/firestore_service.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 
 class MyInfo extends StatefulWidget {
@@ -34,11 +33,10 @@ class _MyInfoState extends State<MyInfo> {
                 return Column(
                   children: [
 
-                    Text("Eposta : ${veriList[index]["Eposta"]}",style: GoogleFonts.acme(fontSize: 12,color: Colors.white70),),
+                    Text("Eposta : ${veriList[index]["Eposta"]}",style: Theme.of(context).textTheme.bodyMedium,),
                     const Divider(indent: 50,endIndent: 50,),
-                    Text("Telefon: ${veriList[index]["Telefon"]}",style: GoogleFonts.varela(fontSize: 12,color: Colors.white70)),
+                    Text("Telefon: ${veriList[index]["Telefon"]}",style: Theme.of(context).textTheme.bodyMedium),
 
-                    // Text(veriList[index]["AdSoyad"],style: const TextStyle(color: Colors.yellow,fontSize: 22),),
                   ],
                 );
               },

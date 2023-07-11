@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({Key? key}) : super(key: key);
@@ -17,6 +16,7 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   bool listType = false;
   List veriList = [];
+  List favNumber = [];
   late bool login ;
 
   bool loggedIn(){
@@ -27,6 +27,10 @@ class _FavoritePageState extends State<FavoritePage> {
       login = true;
       return true;
     }
+  }
+
+  void getFavNum(){
+    FireStoreDB().getFav(listType);
   }
 
 
@@ -49,7 +53,7 @@ class _FavoritePageState extends State<FavoritePage> {
             if(snapshot.data == null){
               return  Center( child: Column(mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Favorileri Getirmeye Çalışıyorum",style: GoogleFonts.farro(fontSize: 20,color: Colors.orange),),
+                  Text("Favorileri Getirmeye Çalışıyorum",style: Theme.of(context).textTheme.headlineSmall,),
                   const SizedBox(height: 10,),
                   const CircularProgressIndicator()
                 ],
@@ -63,14 +67,14 @@ class _FavoritePageState extends State<FavoritePage> {
                   itemBuilder: (context, index) {
                     var aracFiyat = veriList[index]["AracFiyat"];
                     return Card(
-                        color: Colors.transparent,
+                        color: Colors.blueGrey.shade200,
                             child:ListTile(
                                   leading: ClipRRect(
                                       borderRadius: BorderRadius.circular(100),
                                       child: CachedNetworkImage(imageUrl: veriList[index]["AracResimUrl"],errorWidget: (context, url, error) => const Icon(Icons.error_outline),fit: BoxFit.fitWidth,width: 100,)),
                                   title: Text(
                                     veriList[index]["Marka"] ?? " boş",
-                                    style: GoogleFonts.farro(fontSize: 18,color: Colors.yellow.shade300),
+                                    style: Theme.of(context).textTheme.titleLarge,
                                   ),
                                   trailing: Visibility(visible: loggedIn(),
                                     child: IconButton(
@@ -90,9 +94,34 @@ class _FavoritePageState extends State<FavoritePage> {
                                   onTap: () {
                                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ProductDetails(aracID: veriList[index]["AracID"], vehicleType: veriList[index]["VasitaTipi"], caseType: veriList[index]["KasaTipi"], name: veriList[index]["Marka"], model: veriList[index]["Model"], imagePath: veriList[index]["AracResimUrl"], description: veriList[index]["AracOzellikleri"], price: veriList[index]["AracFiyat"], isLiked: veriList[index]["isLiked"], likeCount: veriList[index]["likeCount"])), (route) => false);
                                   },
-                                  subtitle: RichText(text: TextSpan(text: "${veriList[index]["Model"]} \n",style:GoogleFonts.saira(fontSize: 18,color: Colors.grey),children: [
-                                    TextSpan(text: "Favorileyen Sayısı ${veriList[index]["likeCount"]}",style: GoogleFonts.acme(fontSize: 12,color: Colors.cyanAccent.shade200)),
-                                    TextSpan(text:" \n ${veriList[index]["AracFiyat"].toString().substring(0,aracFiyat.toString().length )} ",style: GoogleFonts.arya(fontSize: 16,color: Colors.redAccent.shade200))])),
+                                  subtitle: FutureBuilder(future: FireStoreDB().getVehicle(listType),
+                                    builder: (context, snap) {
+                                      if (snap.hasError) {
+                                        return const Text("Birşeyler Yanlış gitti");
+                                      }
+                                      if(snap.data == null){
+                                        return  Center( child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text("veri yok",style: Theme.of(context).textTheme.titleSmall,),
+
+                                            const LinearProgressIndicator()
+                                          ],
+                                        ));
+                                      }
+                                      favNumber = snap.data as List;
+                                      if (snap.connectionState == ConnectionState.done) {
+                                        return  RichText(text: TextSpan(text: "${veriList[index]["Model"]} \n",style:Theme.of(context).textTheme.bodyMedium,children: [
+                                          TextSpan(text: "Favorilenme ${favNumber[index]["likeCount"]}",style: Theme.of(context).textTheme.bodySmall),
+                                          TextSpan(text:" \n ${veriList[index]["AracFiyat"].toString().substring(0,aracFiyat.toString().length )} ",style:Theme.of(context).textTheme.headlineSmall)
+                                        ]
+                                        )
+                                        );
+                                      }
+                                    return const Text("assa");
+                                      }
+                                    ,
+                                    // child: ,
+                                  ),
 
                                 ),
                         );
@@ -100,6 +129,7 @@ class _FavoritePageState extends State<FavoritePage> {
               );
             }
             return const RefreshProgressIndicator(
+
               color: Colors.orangeAccent,
             );
           }),
