@@ -105,7 +105,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       onTap: () => setState(() => isSearch = !isSearch),
                       child: const Icon(
                         Icons.search,
-                        color: Colors.orange,
+
                       )),
                 ),
               )

@@ -32,13 +32,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             brightness: Brightness.dark,
-            primaryColor: Colors.lightBlue[800],
 
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-              selectedItemColor: Colors.yellow,
-              selectedLabelStyle: TextStyle(color: Colors.pink),
+              selectedItemColor: Colors.white,
+
               unselectedItemColor: Colors.grey,
-              unselectedLabelStyle: TextStyle(color: Colors.yellow)
+
           ),
         textTheme: GoogleFonts.acmeTextTheme().copyWith(
               bodySmall: GoogleFonts.acme(fontSize: 10),

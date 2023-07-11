@@ -36,7 +36,7 @@ class _ProfilPageState extends State<ProfilPage> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           actions: [
-            IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=> EditProfile(gelenAdSoyad: "${user?.displayName}", gelenEmail: "${user?.email}", imageUrl: '${user?.photoURL}',)));},icon: const Icon(Icons.edit_location_sharp,color: Colors.orange,)),
+            IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=> EditProfile(gelenAdSoyad: "${user?.displayName}", gelenEmail: "${user?.email}", imageUrl: '${user?.photoURL}',)));},icon: const Icon(Icons.edit_location_sharp,)),
           ],
         ),
         body:  Center(

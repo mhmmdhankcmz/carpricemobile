@@ -42,9 +42,7 @@ class _MyInfoState extends State<MyInfo> {
               },
             );
           }
-          return const RefreshProgressIndicator(
-            color: Colors.orangeAccent,
-          );
+          return const RefreshProgressIndicator();
         });
   }
 }

@@ -56,7 +56,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           return SimpleDialog(
             title:  Text("Profil Resmi Seç",style: Theme.of(context).textTheme.bodyMedium,),
             backgroundColor: Colors.black54,
-            shadowColor: Colors.yellow,elevation: 50,
+            shadowColor: Colors.white,elevation: 50,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
