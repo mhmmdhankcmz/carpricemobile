@@ -1,3 +1,4 @@
+import 'package:carpricemobile/design_config/color.dart';
 import 'package:carpricemobile/pages/favorite_page.dart';
 import 'package:carpricemobile/pages/products_page.dart';
 import 'package:carpricemobile/pages/profile_page.dart';
@@ -39,6 +40,9 @@ class _HomeState extends State<Home> {
             currentIndex: selectedIndex,
             showSelectedLabels: true,
             onTap: (index)=>setState(()=>selectedIndex=index),
+            backgroundColor: MyColors().bottomNavColor,
+            selectedItemColor: MyColors().iconColor,
+            unselectedItemColor: MyColors().unSelectedIconColor,
             items: const [
               BottomNavigationBarItem(icon: Icon(Icons.home,),label: 'Anasayfa'),
               BottomNavigationBarItem(icon: Icon(Icons.favorite,),label: 'Favoriler'),

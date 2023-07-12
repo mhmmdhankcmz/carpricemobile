@@ -171,7 +171,7 @@ class _ProductsPageState extends State<ProductsPage> {
                             onTap: (){
                             setState(() {
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetails(aracID: "${mod.id}", vehicleType: "${mod.vasitaTipi}", caseType: "${mod.kasaTipi}",
-                                name: "${mod.marka}", model: "${mod.model}", imagePath: "${mod.imageUrl}", description: "${mod.aciklama}", price: "${mod.fiyat}", isLiked:false , likeCount: 0,)));
+                                name: "${mod.marka}", model: "${mod.model}", imagePath: "${mod.imageUrl}", description: "${mod.aciklama}", price: "${mod.fiyat}", isLiked:mod.isLiked!, likeCount: mod.likeCount!,)));
                               print("${widget.model?.id} **0***0***0****3*3*3**");
                             });
 

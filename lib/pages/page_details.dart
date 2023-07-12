@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carpricemobile/design_config/color.dart';
 import 'package:carpricemobile/services/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -115,7 +116,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 padding: const EdgeInsets.all(1),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: Colors.black54,
+                  color: MyColors().cardColor,
                 ),
                 child: Column(
                   textDirection: TextDirection.rtl,
@@ -170,8 +171,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                               largeSize: 10,
                                 smallSize: 10,
                                 alignment: AlignmentDirectional.topStart,
-                                backgroundColor: Colors.orange,
-                                label: Text("${widget.likeCount}"),
+                                backgroundColor: MyColors().scaffoldBackground,
+                                label: Text("${widget.likeCount}",style: Theme.of(context).textTheme.labelSmall,),
                                 child:widget.likeCount ==1 || widget.likeCount >=1 ? Icon(Icons.favorite, size: 40, color: Colors.red.shade600)
                                     :
                                 Icon(Icons.mood_bad, size: 40, color: Colors.blue.shade800,)
@@ -191,7 +192,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             onPressed: () {
                               Navigator.pushNamed(context, '/home',);
                             },
-                            child: const Text("Tüm Araçları Gör")),
+                            child:  Text("Tüm Araçları Gör",style: Theme.of(context).textTheme.titleMedium)),
                       ],
                     ),
                   ],

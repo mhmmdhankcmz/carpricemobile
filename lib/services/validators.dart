@@ -1,3 +1,5 @@
+
+
 class Validators{
   String? validateEmail(String? value) {
     const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
@@ -14,10 +16,10 @@ class Validators{
         : null;
   }
 
-  String? validatePass(PassCurrentValue) {
+  String? validatePass(passCurrentValue) {
       RegExp regex = RegExp(
           r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#.\$&*~+/,.]).{8,}$');
-      var passNonNullValue = PassCurrentValue ?? "";
+      var passNonNullValue = passCurrentValue ?? "";
       if (passNonNullValue.isEmpty) {
         return ("Şifre Gerekli");
       }

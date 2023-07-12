@@ -39,7 +39,7 @@ class MyTextfield extends StatelessWidget {
                 borderSide: BorderSide(color: Colors.grey)),
             enabledBorder:
                const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-            fillColor: Colors.grey.shade600,
+            fillColor: const Color(0xD2E6E7FF),
             filled: true,),
 
       ),

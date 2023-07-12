@@ -1,3 +1,4 @@
+import 'package:carpricemobile/design_config/color.dart';
 import 'package:carpricemobile/design_config/padding_all25.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class MyButton extends StatelessWidget {
           padding: const PaddingAll.all(),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Colors.black54,
+            color: MyColors().appBarColor,
           ),
           child: Center(
             child: Text(buttonName,style:  Theme.of(context).textTheme.bodyMedium,),

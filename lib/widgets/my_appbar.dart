@@ -1,3 +1,4 @@
+import 'package:carpricemobile/design_config/color.dart';
 import 'package:carpricemobile/pages/profile_page.dart';
 import 'package:carpricemobile/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,9 +19,9 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget{
     return AppBar(
       leading: IconButton(onPressed: (){
         Navigator.pushNamed(context, '/home');
-      }, icon: const Icon(CupertinoIcons.home)),
+      }, icon:  Icon(CupertinoIcons.home ,color: MyColors().iconColor,)),
       elevation: 1,
-      backgroundColor: Colors.transparent,
+      backgroundColor: MyColors().appBarColor,
       // leading: Icon(Icons.menu),
       systemOverlayStyle: SystemUiOverlayStyle.light,
       // ignore: prefer_const_literals_to_create_immutables
@@ -29,7 +30,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget{
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(onTap: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>const ProfilPage()));
-          },child: RichText(text:  TextSpan(style: Theme.of(context).textTheme.bodyMedium,text:user?.displayName ?? "",), selectionColor: Colors.red , overflow: TextOverflow.ellipsis, softWrap: false, )),
+          },child: RichText(text:  TextSpan(style: Theme.of(context).textTheme.bodyMedium,text:user?.displayName ?? "",) , overflow: TextOverflow.ellipsis, softWrap: false, )),
         ),
         Consumer(builder: (context, value, child) {
           return TextButton.icon( label: Text(user == null ? "Giriş Yap" : "Çıkış yap",style: Theme.of(context).textTheme.labelSmall,),onPressed: () async{
@@ -39,7 +40,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget{
               await AuthService().signOut();
               Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => true);
             }
-          },icon: Icon(user == null ? Icons.login : Icons.lock_person_outlined  ));
+          },icon: Icon(user == null ? Icons.login : Icons.logout  ,color: MyColors().iconColor,weight: 10,));
         },
         ),
       ],

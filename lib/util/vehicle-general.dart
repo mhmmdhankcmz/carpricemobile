@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carpricemobile/design_config/color.dart';
 import 'package:carpricemobile/pages/page_details.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class VehicleGeneral extends StatelessWidget {
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ProductDetails(name: carName.toUpperCase(),imagePath: carImagePath,description:carDescription,price: carPrice, model: carModel.toUpperCase(), vehicleType: vehicleType, caseType: caseType, aracID:aracID, isLiked: isLiked, likeCount: likeCount, )), (route) => false);
 
       },
-        child: Container(margin: const EdgeInsets.all(5),decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),color: Colors.black54),
+        child: Container(margin: const EdgeInsets.all(5),decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),color: MyColors().cardColor),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -70,7 +71,7 @@ class VehicleGeneral extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(2),
-                      child: Container(decoration: BoxDecoration(color:Theme.of(context).scaffoldBackgroundColor ,borderRadius: BorderRadius.circular(8)),height: 15,width: 15, child: Center(child: Text(caseType,style: Theme.of(context).textTheme.labelMedium,))),
+                      child: Container(decoration: BoxDecoration(color:Theme.of(context).scaffoldBackgroundColor ,borderRadius: BorderRadius.circular(8)),height: 15,width: 15, child: Center(child: Text(caseType,style: Theme.of(context).textTheme.labelSmall,))),
                     ),
                   ],
                 ),

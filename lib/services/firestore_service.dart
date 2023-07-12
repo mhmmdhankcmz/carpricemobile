@@ -32,6 +32,9 @@ class FireStoreDB extends ChangeNotifier{
       return null;
     }
   }
+  Future<void> handleRefresh() async{
+    return await Future.delayed(const Duration(seconds: 2));
+  }
 
   Future getFavoriteVehicle(bool listType )async{
     try{

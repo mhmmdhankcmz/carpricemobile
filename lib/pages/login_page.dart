@@ -2,6 +2,7 @@ import 'package:carpricemobile/services/auth_service.dart';
 import 'package:carpricemobile/services/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:carpricemobile/design_config/color.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                     sizedBox30(),
                     Text("Hoşgeldiniz",style: Theme.of(context).textTheme.headlineMedium),
                     sizedBox30(),
-                    MyTextfield(controller: emailController, hinText: hintEmail, obscureText: false,iconButtons: const Icon(Icons.email), validate:Validators().validateEmail, autoValidate: AutovalidateMode.onUserInteraction, keyboardType: TextInputType.emailAddress, textInputAction: TextInputAction.next, maxLenghts: 50,),
+                    MyTextfield(controller: emailController, hinText: hintEmail, obscureText: false,iconButtons:  Icon(Icons.email,color: MyColors().iconColor,), validate:Validators().validateEmail, autoValidate: AutovalidateMode.onUserInteraction, keyboardType: TextInputType.emailAddress, textInputAction: TextInputAction.next, maxLenghts: 50,),
                     const SizedBox(height: 25,),
                     MyTextfield(controller: passController, hinText: hintPass, obscureText: obscure,iconButtons: IconButton(onPressed: (){
                       setState(() {
@@ -125,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                     InkWell(onTap: (){
                       Navigator.pushNamed(context, '/register');
                     },
-                      child: Container(height: 40,decoration: BoxDecoration(color: Colors.black54,borderRadius: BorderRadius.circular(8),),
+                      child: Container(height: 40,decoration: BoxDecoration(color: MyColors().appBarColor,borderRadius: BorderRadius.circular(8),),
                         child: Row(mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.person_add_alt,color: Colors.grey.shade400,),

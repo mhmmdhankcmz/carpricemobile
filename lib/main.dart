@@ -1,3 +1,4 @@
+import 'package:carpricemobile/design_config/color.dart';
 import 'package:carpricemobile/pages/favorite_page.dart';
 import 'package:carpricemobile/pages/forgot_password.dart';
 import 'package:carpricemobile/pages/home.dart';
@@ -31,29 +32,33 @@ class MyApp extends StatelessWidget {
         title: 'CarPrice',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            brightness: Brightness.dark,
 
+            // brightness: Brightness.dark,
+          // backgroundColor: const Color.fromRGBO(202, 213 , 235 , 100),
+            colorScheme: ColorScheme.light(primary: MyColors().iconColor,),
+          appBarTheme: AppBarTheme(
+              // color: const Color.fromRGBO(202, 213 , 235 , 100),
+              backgroundColor: const Color.fromRGBO(202, 213 , 235 , 100)
+          ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-              selectedItemColor: Colors.white,
 
-              unselectedItemColor: Colors.grey,
 
           ),
-        textTheme: GoogleFonts.acmeTextTheme().copyWith(
-              bodySmall: GoogleFonts.acme(fontSize: 10),
-              bodyMedium: GoogleFonts.acme(fontSize: 15),
-              bodyLarge: GoogleFonts.acme(fontSize: 20),
-              titleSmall: GoogleFonts.acme(fontSize: 15),
-              titleMedium:  GoogleFonts.acme(fontSize: 20),
-              titleLarge:  GoogleFonts.acme(fontSize: 25),
-              labelSmall:  GoogleFonts.acme(fontSize: 8),
-              labelMedium:  GoogleFonts.acme(fontSize: 12),
-              labelLarge:  GoogleFonts.acme(fontSize: 15),
-              headlineSmall:  GoogleFonts.acme(fontSize: 25),
-              headlineMedium:  GoogleFonts.acme(fontSize: 30),
-              headlineLarge:  GoogleFonts.acme(fontSize: 35),
+        textTheme: GoogleFonts.dosisTextTheme().copyWith(
+              bodySmall: GoogleFonts.dosis(fontSize: 10,fontWeight: FontWeight.bold),
+              bodyMedium: GoogleFonts.dosis(fontSize: 15,fontWeight: FontWeight.bold),
+              bodyLarge: GoogleFonts.dosis(fontSize: 20,fontWeight: FontWeight.bold),
+              titleSmall: GoogleFonts.dosis(fontSize: 15,fontWeight: FontWeight.bold),
+              titleMedium:  GoogleFonts.dosis(fontSize: 20,fontWeight: FontWeight.bold),
+              titleLarge:  GoogleFonts.dosis(fontSize: 25,fontWeight: FontWeight.bold),
+              labelSmall:  GoogleFonts.dosis(fontSize: 8,fontWeight: FontWeight.bold),
+              labelMedium:  GoogleFonts.dosis(fontSize: 12,fontWeight: FontWeight.bold),
+              labelLarge:  GoogleFonts.dosis(fontSize: 15,fontWeight: FontWeight.bold),
+              headlineSmall:  GoogleFonts.dosis(fontSize: 25,fontWeight: FontWeight.bold),
+              headlineMedium:  GoogleFonts.dosis(fontSize: 30,fontWeight: FontWeight.bold),
+              headlineLarge:  GoogleFonts.dosis(fontSize: 35,fontWeight: FontWeight.bold),
         ),
-          scaffoldBackgroundColor: Colors.grey.shade600,
+          scaffoldBackgroundColor: MyColors().scaffoldBackground,
         ),
         routes: {
               '/home': (context) => const Home(),

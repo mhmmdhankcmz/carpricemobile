@@ -4,6 +4,7 @@ import 'package:carpricemobile/services/firestore_service.dart';
 import 'package:carpricemobile/widgets/my_%C4%B1nfo.dart';
 import 'package:carpricemobile/widgets/profile_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 import '../widgets/numbers_widget.dart';
 
@@ -23,6 +24,7 @@ class _ProfilPageState extends State<ProfilPage> {
   bool listType = false;
 
 
+
   @override
   Widget build(BuildContext context) {
     if(user == null){
@@ -39,7 +41,13 @@ class _ProfilPageState extends State<ProfilPage> {
             IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=> EditProfile(gelenAdSoyad: "${user?.displayName}", gelenEmail: "${user?.email}", imageUrl: '${user?.photoURL}',)));},icon: const Icon(Icons.edit_location_sharp,)),
           ],
         ),
-        body:  Center(
+        body:  LiquidPullToRefresh(
+          color: Colors.transparent,
+          backgroundColor: Colors.blueAccent,
+          height: 200,
+          animSpeedFactor: 10,
+          showChildOpacityTransition: false,
+          onRefresh: FireStoreDB().handleRefresh,
           child: ListView(
             padding: const EdgeInsets.all(8),
             physics: const BouncingScrollPhysics(),
