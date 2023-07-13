@@ -10,6 +10,7 @@ class VehicleGeneral extends StatelessWidget {
   final String carName;
   final String carModel;
   final String carDescription;
+  final String updateDate;
   final String carPrice;
   final String aracID;
   late bool isLiked ;
@@ -18,7 +19,7 @@ class VehicleGeneral extends StatelessWidget {
 
 
 
-  VehicleGeneral({super.key, required this.carDescription,required this.carImagePath, required this.carName,required this.carPrice, required this.carModel, required this.vehicleType, required this.caseType, required this.aracID,required this.isLiked,required this.likeCount});
+  VehicleGeneral({super.key, required this.carDescription,required this.carImagePath, required this.carName,required this.carPrice, required this.carModel, required this.vehicleType, required this.caseType, required this.aracID,required this.isLiked,required this.likeCount, required this.updateDate});
 
 
   @override
@@ -27,27 +28,19 @@ class VehicleGeneral extends StatelessWidget {
       padding: const EdgeInsets.only(left: 8.0,bottom: 8),
       child: GestureDetector(onTap: (){
 
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ProductDetails(name: carName.toUpperCase(),imagePath: carImagePath,description:carDescription,price: carPrice, model: carModel.toUpperCase(), vehicleType: vehicleType, caseType: caseType, aracID:aracID, isLiked: isLiked, likeCount: likeCount, )), (route) => false);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetails(name: carName.toUpperCase(),imagePath: carImagePath,description:carDescription,price: carPrice, model: carModel.toUpperCase(), vehicleType: vehicleType, caseType: caseType, aracID:aracID, isLiked: isLiked, likeCount: likeCount, updateDate: updateDate, )));
 
       },
-        child: Container(margin: const EdgeInsets.all(5),decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),color: MyColors().cardColor),
+        child: Container(
+          margin: const EdgeInsets.all(5),decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),color: MyColors().cardColor),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: RichText(text: TextSpan(text:carName.toUpperCase(),style: Theme.of(context).textTheme.bodyLarge,children: [ TextSpan(text:" ${carModel.toUpperCase()}",style: Theme.of(context).textTheme.bodyMedium)]),),
+                child: RichText(text: TextSpan(text:carName.toUpperCase(),style: Theme.of(context).textTheme.bodyLarge,children: [ TextSpan(text:" ${carModel.toUpperCase()}",style: Theme.of(context).textTheme.bodyMedium),]),),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(5.0),
-              //   child: ClipRRect(borderRadius: BorderRadius.circular(8),child: Image.network(carImagePath,height: 75 ,width:150,fit: BoxFit.fitWidth,loadingBuilder: (BuildContext context, Widget child,
-              //       ImageChunkEvent? loadingProgress) {
-              //     if (loadingProgress == null) {
-              //       return child;
-              //     }
-              //     return const CupertinoActivityIndicator(radius: 20,animating: true,color: Colors.orange,);
-              //   },),),
-              // ),
+
               Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: ClipRRect(borderRadius: BorderRadius.circular(8),child: CachedNetworkImage(
@@ -65,13 +58,20 @@ class VehicleGeneral extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: RichText(text: TextSpan(text:"$carPrice ",style: Theme.of(context).textTheme.labelMedium,)),
+                    Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: [
+                        Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: RichText(text: TextSpan(text:"$carPrice ",style: Theme.of(context).textTheme.labelMedium,)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: RichText(text: TextSpan(text:"${updateDate.substring(0,10)} ",style: Theme.of(context).textTheme.labelSmall,)),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(2),
-                      child: Container(decoration: BoxDecoration(color:Theme.of(context).scaffoldBackgroundColor ,borderRadius: BorderRadius.circular(8)),height: 15,width: 15, child: Center(child: Text(caseType,style: Theme.of(context).textTheme.labelSmall,))),
+                      child: Container(decoration: BoxDecoration(color:Theme.of(context).scaffoldBackgroundColor ,borderRadius: BorderRadius.circular(8)),height: 15, child: Center(child: Text(caseType,style: Theme.of(context).textTheme.labelSmall,))),
                     ),
                   ],
                 ),

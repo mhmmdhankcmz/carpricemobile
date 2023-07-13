@@ -6,7 +6,8 @@ class MyColors{
   Color titleTextColor = const Color(0xFF4177b3);
   Color priceColor = const Color(0xff043d80);
 
-  Color unSelectedIconColor = const Color(0xff828488);
+  Color unSelectedIconColor = const Color(0xffaeb9b9);
+  Color selectedIconColor = const Color(0xff6fd1f5);
   Color bottomNavColor = const Color(0xff69a1e1);
   Color scaffoldBackground =  const Color(0xff7fc6f5);
   Color iconColor =  const Color(0xffadd9fa);

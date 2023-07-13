@@ -1,3 +1,4 @@
+import 'package:carpricemobile/design_config/color.dart';
 import 'package:carpricemobile/pages/edit_profil.dart';
 import 'package:carpricemobile/pages/login_page.dart';
 import 'package:carpricemobile/services/firestore_service.dart';
@@ -43,7 +44,7 @@ class _ProfilPageState extends State<ProfilPage> {
         ),
         body:  LiquidPullToRefresh(
           color: Colors.transparent,
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: MyColors().iconColor,
           height: 200,
           animSpeedFactor: 10,
           showChildOpacityTransition: false,
@@ -56,7 +57,7 @@ class _ProfilPageState extends State<ProfilPage> {
               const SizedBox(height: 24,),
               buildName("${user?.displayName}", "${user?.email}"),
                FutureBuilder(
-                 future: FireStoreDB().getFav(listType),
+                 future: FireStoreDB().getFav(listType,),
                  builder: (context, snapshot) {
                    if(snapshot.hasData){sayi = snapshot.data;return    NumbersWidget(sayi.length);}
                    if(snapshot.hasData == 0){return const Text("Sayı Yok");}

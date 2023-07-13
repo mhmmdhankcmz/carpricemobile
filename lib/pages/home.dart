@@ -35,13 +35,17 @@ class _HomeState extends State<Home> {
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
+          elevation: 100,
+          unselectedFontSize: 8,
+          unselectedIconTheme:const IconThemeData(size: 15),
+
           type: BottomNavigationBarType.fixed,
 
             currentIndex: selectedIndex,
             showSelectedLabels: true,
             onTap: (index)=>setState(()=>selectedIndex=index),
             backgroundColor: MyColors().bottomNavColor,
-            selectedItemColor: MyColors().iconColor,
+            selectedItemColor: MyColors().selectedIconColor,
             unselectedItemColor: MyColors().unSelectedIconColor,
             items: const [
               BottomNavigationBarItem(icon: Icon(Icons.home,),label: 'Anasayfa'),

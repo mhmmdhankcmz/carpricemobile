@@ -32,13 +32,25 @@ class FireStoreDB extends ChangeNotifier{
       return null;
     }
   }
-  Future<void> handleRefresh() async{
-    return await Future.delayed(const Duration(seconds: 2));
+
+   getVehicleMarka(bool selectMarka,String marka )async{
+    try{
+      await collectionRef.where("Marka",isEqualTo:marka).get().then((querySnaps) {
+        for(var result in querySnaps.docs){
+          vehicleList.add(result.data());
+        }
+      });
+      notifyListeners();
+      return vehicleList;
+    }catch(e){
+      debugPrint("Error - $e");
+      return null;
+    }
   }
 
   Future getFavoriteVehicle(bool listType )async{
     try{
-      await collectionRef.where("isLiked",isEqualTo: false,).get().then((querySnaps) {
+      await collectionRef.where("isLiked",isEqualTo: true,).get().then((querySnaps) {
         collectionRefFav.where("UserID",isEqualTo: user?.uid);
         for(var result in querySnaps.docs){
           vehicleList.add(result.data());
@@ -75,20 +87,36 @@ class FireStoreDB extends ChangeNotifier{
     }
   }
 
-  Future getFav(bool listType )async{
-    try{
-      await collectionRefFav.where("UserID",isEqualTo:user?.uid).get().then((querySnaps) {
-        print("---> ${user?.email}");
-        for(var result in querySnaps.docs){
-          favList.add(result.data());
-        }
-      });
-      notifyListeners();
-      return favList;
-    }catch(e){
-      debugPrint("Error - $e");
-      return null;
+  Future getFav(bool listType,)async{
+    if(user == null){
+      try{
+        await collectionRefFav.where("UserID",isEqualTo:user?.uid).get().then((querySnaps) {
+          for(var result in querySnaps.docs){
+            favList.add(result.data());
+          }
+        });
+        notifyListeners();
+        return favList;
+      }catch(e){
+        debugPrint("Error - $e");
+        return "Birşey bulamadım";
+      }
+    }else{
+      try{
+        await collectionRefFav.where("UserID",isEqualTo:user?.uid).get().then((querySnaps) {
+          print("---> ${user?.email}");
+          for(var result in querySnaps.docs){
+            favList.add(result.data());
+          }
+        });
+        notifyListeners();
+        return favList;
+      }catch(e){
+        debugPrint("Error - $e");
+        return null;
+      }
     }
+
   }
 
   Future getUser(bool listType )async{
@@ -123,6 +151,10 @@ class FireStoreDB extends ChangeNotifier{
       user?.updatePhotoURL(profilimageUrl);
     });
     notifyListeners();
+  }
+
+  Future<void> handleRefresh() async{
+    return await Future.delayed(const Duration(seconds: 1));
   }
 
 

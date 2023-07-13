@@ -1,10 +1,13 @@
+import 'package:carpricemobile/design_config/color.dart';
 import 'package:carpricemobile/design_config/padding_only_right.dart';
 import 'package:carpricemobile/pages/page_details.dart';
 import 'package:carpricemobile/services/firestore_service.dart';
 import 'package:carpricemobile/util/arac-marka.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import '../design_config/page_padding_top_right.dart';
 import '../models/vehicles_model.dart';
 import '../util/vehicle-general.dart';
@@ -23,22 +26,30 @@ class _ProductsPageState extends State<ProductsPage> {
 
   bool isSearch = false;
   bool listType = false;
+  bool selectMarka = false;
+  String secilenMarka = "";
 
   List veriList = [];
   List dataList = [];
+  List secilmisMarka =[];
 
   String path = "lib/images/";
 
-  void coffeeTypeSelected(int index) {
+  // void coffeeTypeSelected(int index) {
+  //     //this for loop makes every selection false
+  //     for (int i = 1; i < veriList.length; i++) {
+  //       veriList[i][1] = false;
+  //       selectMarka = false;
+  //
+  //     }
+  //     setState(() {
+  //     veriList[index][1] = true;
+  //     selectMarka = true;
+  //
+  //   });
+  // }
 
-      //this for loop makes every selection false
-      for (int i = 1; i < veriList.length; i++) {
-        veriList[i][1] = false;
-      }
-      setState(() {
-      veriList[index][1] = true;
-    });
-  }
+
 
   Stream <QuerySnapshot>? postDocumentsList;
   String aramaKelimesi = "";
@@ -78,7 +89,9 @@ class _ProductsPageState extends State<ProductsPage> {
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                               onPressed: () {
-                                print("$aramaKelimesi arama yapıldı");
+                                if (kDebugMode) {
+                                  print("$aramaKelimesi arama yapıldı");
+                                }
                               },
                               icon: const Icon(Icons.search_rounded)),
                           prefixIcon: GestureDetector(
@@ -132,7 +145,14 @@ class _ProductsPageState extends State<ProductsPage> {
                             isSelected: true,
                             coffeType: veriList[index]["MarkaAdi"],
                             onTap: () {
-                              print(veriList[index]["MarkaAdi"]);
+                              secilenMarka = veriList[index]["MarkaAdi"];
+                              setState(() {
+                                selectMarka = true;
+                                secilenMarka = veriList[index]["MarkaAdi"];
+
+                              });
+
+
                             });
                       },
                     );
@@ -145,6 +165,7 @@ class _ProductsPageState extends State<ProductsPage> {
               ),
             ),
           ),
+
           isSearch
               ?
           StreamBuilder(
@@ -162,7 +183,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       itemBuilder: (context, index) {
                         widget.model = Vehicles.fromJson(snapshot.data.docs[index].data() as Map<String, dynamic>);
                         var mod = widget.model;
-                        return Card(
+                        return Card(color: MyColors().cardColor,
                           child: CupertinoListTile(additionalInfo: Text("${mod?.kasaTipi}",style: Theme.of(context).textTheme.labelSmall,),
                             leading: CircleAvatar(backgroundImage: NetworkImage(mod!.imageUrl!),),
                             title: Text(mod.marka!,style:Theme.of(context).textTheme.bodyLarge),
@@ -171,8 +192,10 @@ class _ProductsPageState extends State<ProductsPage> {
                             onTap: (){
                             setState(() {
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetails(aracID: "${mod.id}", vehicleType: "${mod.vasitaTipi}", caseType: "${mod.kasaTipi}",
-                                name: "${mod.marka}", model: "${mod.model}", imagePath: "${mod.imageUrl}", description: "${mod.aciklama}", price: "${mod.fiyat}", isLiked:mod.isLiked!, likeCount: mod.likeCount!,)));
-                              print("${widget.model?.id} **0***0***0****3*3*3**");
+                                name: "${mod.marka}", model: "${mod.model}", imagePath: "${mod.imageUrl}", description: "${mod.aciklama}", price: "${mod.fiyat}", isLiked:mod.isLiked!, likeCount: mod.likeCount!, updateDate: mod.eklenmeTarihi!,)));
+                              if (kDebugMode) {
+                                print("${widget.model?.id} **0***0***0****3*3*3**");
+                              }
                             });
 
                               },
@@ -196,45 +219,106 @@ class _ProductsPageState extends State<ProductsPage> {
               }
           )
               :
-          FutureBuilder(
-              future: FireStoreDB().getVehicle(listType),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return const Text("Birşeyler yanlış  gitti");
-                }
-                if (snapshot.connectionState == ConnectionState.done) {
-                  dataList = snapshot.data as List;
+              !selectMarka
+               ?
+              FutureBuilder(
+                  future: FireStoreDB().getVehicle(listType),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text("Birşeyler yanlış  gitti");
+                    }
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      dataList = snapshot.data as List;
 
-                  return Expanded(
-                    child: GridView.builder(
-                      itemCount: dataList.length,
-                      shrinkWrap: true,
-                      padding: const PaddingOnlyRight.all(),
-                      scrollDirection: Axis.vertical,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2),
-                      itemBuilder: (context, index) {
-                        return VehicleGeneral(
-                          carDescription: dataList[index]["AracOzellikleri"],
-                          carImagePath: dataList[index]["aracResimUrl"],
-                          carName:dataList[index]["Marka"] ,
-                          carPrice: dataList[index]["AracFiyat"].toString().substring(0,dataList[index]["AracFiyat"].toString().length - 3),
-                          carModel: dataList[index]["Model"],
-                          vehicleType: dataList[index]["VasitaTipi"],
-                          caseType: dataList[index]["KasaTipi"],
-                          aracID: dataList[index]["id"],
-                          isLiked: dataList[index]["isLiked"],
-                          likeCount: dataList[index]["likeCount"],
-                        );
-                      },
-                    ),
-                  );
-                }
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }),
+                      return Expanded(
+                        child: LiquidPullToRefresh(
+                          color: Colors.transparent,
+                          backgroundColor: MyColors().iconColor,
+                          height: 200,
+                          animSpeedFactor: 10,
+                          showChildOpacityTransition: true,
+                          onRefresh: FireStoreDB().handleRefresh,
+                          child: GridView.builder(
+                            itemCount: dataList.length,
+                            shrinkWrap: true,
+                            padding: const PaddingOnlyRight.all(),
+                            scrollDirection: Axis.vertical,
+                            gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2),
+                            itemBuilder: (context, index) {
+                              return VehicleGeneral(
+                                carDescription: dataList[index]["AracOzellikleri"],
+                                carImagePath: dataList[index]["aracResimUrl"],
+                                carName:dataList[index]["Marka"] ,
+                                carPrice: dataList[index]["AracFiyat"].toString().substring(0,dataList[index]["AracFiyat"].toString().length - 3),
+                                carModel: dataList[index]["Model"],
+                                vehicleType: dataList[index]["VasitaTipi"],
+                                caseType: dataList[index]["KasaTipi"],
+                                aracID: dataList[index]["id"],
+                                isLiked: dataList[index]["isLiked"],
+                                likeCount: dataList[index]["likeCount"],
+                                updateDate: dataList[index]["eklenmeTarihi"],
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  })
+              :
+              FutureBuilder(
+                  future: FireStoreDB().getVehicleMarka(selectMarka,secilenMarka),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text("Birşeyler yanlış  gitti");
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      secilmisMarka = snapshot.data as List;
+                      return Expanded(
+                        child: LiquidPullToRefresh(
+                          color: Colors.transparent,
+                          backgroundColor: MyColors().iconColor,
+                          height: 200,
+                          animSpeedFactor: 10,
+                          showChildOpacityTransition: true,
+                          onRefresh: FireStoreDB().handleRefresh,
+                          child: GridView.builder(
+                            itemCount: secilmisMarka.length,
+                            shrinkWrap: true,
+                            padding: const PaddingOnlyRight.all(),
+                            scrollDirection: Axis.vertical,
+                            gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2),
+                            itemBuilder: (context, index) {
+                              return VehicleGeneral(
+                                carDescription: secilmisMarka[index]["AracOzellikleri"],
+                                carImagePath: secilmisMarka[index]["aracResimUrl"],
+                                carName:secilmisMarka[index]["Marka"] ,
+                                carPrice: secilmisMarka[index]["AracFiyat"].toString().substring(0,secilmisMarka[index]["AracFiyat"].toString().length - 3),
+                                carModel: secilmisMarka[index]["Model"],
+                                vehicleType: secilmisMarka[index]["VasitaTipi"],
+                                caseType: secilmisMarka[index]["KasaTipi"],
+                                aracID: secilmisMarka[index]["id"],
+                                isLiked: secilmisMarka[index]["isLiked"],
+                                likeCount: secilmisMarka[index]["likeCount"],
+                                updateDate: secilmisMarka[index]["eklenmeTarihi"],
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  })
+
         ],
       ),
     );
