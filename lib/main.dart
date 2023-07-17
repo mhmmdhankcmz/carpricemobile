@@ -36,9 +36,9 @@ class MyApp extends StatelessWidget {
             // brightness: Brightness.dark,
           // backgroundColor: const Color.fromRGBO(202, 213 , 235 , 100),
             colorScheme: ColorScheme.light(primary: MyColors().iconColor,),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
               // color: const Color.fromRGBO(202, 213 , 235 , 100),
-              backgroundColor: const Color.fromRGBO(202, 213 , 235 , 100)
+              backgroundColor: Color.fromRGBO(202, 213 , 235 , 100)
           ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
 

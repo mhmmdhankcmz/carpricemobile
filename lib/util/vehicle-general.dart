@@ -38,7 +38,7 @@ class VehicleGeneral extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: RichText(text: TextSpan(text:carName.toUpperCase(),style: Theme.of(context).textTheme.bodyLarge,children: [ TextSpan(text:" ${carModel.toUpperCase()}",style: Theme.of(context).textTheme.bodyMedium),]),),
+                child: RichText(text: TextSpan(text:carName.toUpperCase(),style: Theme.of(context).textTheme.bodyMedium,children: [ TextSpan(text:" ${carModel.toUpperCase()}",style: Theme.of(context).textTheme.bodySmall),],),),
               ),
 
               Padding(

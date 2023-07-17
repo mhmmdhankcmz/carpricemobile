@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import '../design_config/page_padding_top_right.dart';
 import '../models/vehicles_model.dart';
@@ -28,10 +29,21 @@ class _ProductsPageState extends State<ProductsPage> {
   bool listType = false;
   bool selectMarka = false;
   String secilenMarka = "";
+  bool filtering = false;
+
+  bool markayaAscOrDesc = false;
+  bool modeleAscOrDesc = false;
+  bool priceAscOrDesc = false;
+
 
   List veriList = [];
   List dataList = [];
   List secilmisMarka =[];
+  List filters = [ ];
+
+
+  List selectField = ["Marka","Model","AracFiyat"];
+   int selectedField = 0;
 
   String path = "lib/images/";
 
@@ -49,8 +61,6 @@ class _ProductsPageState extends State<ProductsPage> {
   //   });
   // }
 
-
-
   Stream <QuerySnapshot>? postDocumentsList;
   String aramaKelimesi = "";
   initSearcghingPost(aramaKelimesi) {
@@ -60,6 +70,15 @@ class _ProductsPageState extends State<ProductsPage> {
       postDocumentsList;
     });
   }
+
+  void dropdownCallBack(String? selectedValue){
+    if(selectedValue is String){
+      setState(() {
+        filters = selectedValue as List;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +100,6 @@ class _ProductsPageState extends State<ProductsPage> {
                         onChanged: (textEntered){
                           setState(() {
                             aramaKelimesi = textEntered.trim().toUpperCase();
-
 
                           });
                         },
@@ -110,18 +128,69 @@ class _ProductsPageState extends State<ProductsPage> {
                       )),
                 ),
               ),
-              Visibility(
-                visible: !isSearch,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 25, top: 8, bottom: 8),
-                  child: GestureDetector(
-                      onTap: () => setState(() => isSearch = !isSearch),
-                      child: const Icon(
-                        Icons.search,
+              Row(mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                Visibility(
+                  visible: !isSearch,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 25, top: 8, bottom: 8),
+                    child: Stack(children:[
 
-                      )),
+                      DropdownButton(borderRadius: BorderRadius.circular(5),
+                        dropdownColor: MyColors().iconColor,
+                        items:  [
+                        DropdownMenuItem(value: 'az',onTap: (){
+                          setState(() {
+                            filtering = !filtering;
+                            markayaAscOrDesc = !markayaAscOrDesc;
+                              selectedField = 0;
+                              print(selectField[selectedField]);
+                          });
+                        },child: markayaAscOrDesc?  Text("Markaya göre A dan Z ye",style: Theme.of(context).textTheme.labelMedium,) : Text("Markaya göre Z den-A ya",style: Theme.of(context).textTheme.labelMedium,),),
+
+                        DropdownMenuItem( onTap: (){
+                          setState(() {
+                            modeleAscOrDesc = !modeleAscOrDesc;
+                            selectedField = 1;
+                            print(selectField[selectedField]);
+                          });
+                        },value: 'modelAscOrDesc',child: modeleAscOrDesc ? Text("Modele göre Z den- A ya",style: Theme.of(context).textTheme.labelMedium,) :Text("Modele göre  A dan - Z ye",style: Theme.of(context).textTheme.labelMedium,) ,),
+
+                        DropdownMenuItem(onTap: (){
+                          setState(() {
+                            priceAscOrDesc = !priceAscOrDesc;
+                            selectedField =2;
+                            print(selectField[selectedField]);
+                          });
+
+                        },value: 'priceAscOrDesc',child: priceAscOrDesc ? Text("Fiyata göre önce en ucuz",style: Theme.of(context).textTheme.labelMedium,) : Text("Fiyata göre önce en pahalı",style: Theme.of(context).textTheme.labelMedium,),
+                        ),
+
+                      ], onChanged: dropdownCallBack,
+                        icon: const Icon(Icons.filter_list,color: Colors.black),
+                        // iconSize: 25,
+
+
+                      style: GoogleFonts.patuaOne(color: MyColors().iconColor),
+                      ),
+                    ]  ),
+                  ),
                 ),
-              )
+
+                Visibility(
+                  visible: !isSearch,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 25, top: 8, bottom: 8),
+                    child: GestureDetector(
+                        onTap: () => setState(() => isSearch = !isSearch),
+                        child: const Icon(
+                          Icons.search,
+
+                        )),
+                  ),
+                )
+              ],),
+
             ],
           ),
           Visibility(
@@ -129,7 +198,7 @@ class _ProductsPageState extends State<ProductsPage> {
             child: SizedBox(
               height: 30,
               child: FutureBuilder(
-                future: FireStoreDB().getMarka(listType),
+                future: FireStoreDB().getMarka(listType,markayaAscOrDesc),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return const Text("Bir şeyler yanlış  Gitti");
@@ -222,7 +291,7 @@ class _ProductsPageState extends State<ProductsPage> {
               !selectMarka
                ?
               FutureBuilder(
-                  future: FireStoreDB().getVehicle(listType),
+                  future: FireStoreDB().getVehicle(listType,filtering,selectField[selectedField]),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return const Text("Birşeyler yanlış  gitti");
@@ -273,51 +342,55 @@ class _ProductsPageState extends State<ProductsPage> {
               FutureBuilder(
                   future: FireStoreDB().getVehicleMarka(selectMarka,secilenMarka),
                   builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Text("Birşeyler yanlış  gitti");
+                    if(snapshot.connectionState == ConnectionState.waiting){
+                      return const CircularProgressIndicator();
+                    }else{
+                      if (snapshot.hasError) {
+                        return const Text("Birşeyler yanlış  gitti");
+                      }else{
+                        if(!snapshot.hasData){
+                          return  Text("$secilenMarka ile araç yok!!");
+                        }else{
+                          secilmisMarka = snapshot.data as List;
+                          return Expanded(
+                            child: LiquidPullToRefresh(
+                              color: Colors.transparent,
+                              backgroundColor: MyColors().iconColor,
+                              height: 200,
+                              animSpeedFactor: 10,
+                              showChildOpacityTransition: true,
+                              onRefresh: FireStoreDB().handleRefresh,
+                              child: GridView.builder(
+                                itemCount: secilmisMarka.length,
+                                shrinkWrap: true,
+                                padding: const PaddingOnlyRight.all(),
+                                scrollDirection: Axis.vertical,
+                                gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                                itemBuilder: (context, index) {
+                                  return VehicleGeneral(
+                                    carDescription: secilmisMarka[index]["AracOzellikleri"],
+                                    carImagePath: secilmisMarka[index]["aracResimUrl"],
+                                    carName: secilmisMarka[index]["Marka"],
+                                    carPrice: secilmisMarka[index]["AracFiyat"].toString().substring(0, secilmisMarka[index]["AracFiyat"].toString().length - 3),
+                                    carModel: secilmisMarka[index]["Model"],
+                                    vehicleType: secilmisMarka[index]["VasitaTipi"],
+                                    caseType: secilmisMarka[index]["KasaTipi"],
+                                    aracID: secilmisMarka[index]["id"],
+                                    isLiked: secilmisMarka[index]["isLiked"],
+                                    likeCount: secilmisMarka[index]["likeCount"],
+                                    updateDate: secilmisMarka[index]["eklenmeTarihi"],
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        }
+                      }
                     }
-
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      secilmisMarka = snapshot.data as List;
-                      return Expanded(
-                        child: LiquidPullToRefresh(
-                          color: Colors.transparent,
-                          backgroundColor: MyColors().iconColor,
-                          height: 200,
-                          animSpeedFactor: 10,
-                          showChildOpacityTransition: true,
-                          onRefresh: FireStoreDB().handleRefresh,
-                          child: GridView.builder(
-                            itemCount: secilmisMarka.length,
-                            shrinkWrap: true,
-                            padding: const PaddingOnlyRight.all(),
-                            scrollDirection: Axis.vertical,
-                            gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2),
-                            itemBuilder: (context, index) {
-                              return VehicleGeneral(
-                                carDescription: secilmisMarka[index]["AracOzellikleri"],
-                                carImagePath: secilmisMarka[index]["aracResimUrl"],
-                                carName:secilmisMarka[index]["Marka"] ,
-                                carPrice: secilmisMarka[index]["AracFiyat"].toString().substring(0,secilmisMarka[index]["AracFiyat"].toString().length - 3),
-                                carModel: secilmisMarka[index]["Model"],
-                                vehicleType: secilmisMarka[index]["VasitaTipi"],
-                                caseType: secilmisMarka[index]["KasaTipi"],
-                                aracID: secilmisMarka[index]["id"],
-                                isLiked: secilmisMarka[index]["isLiked"],
-                                likeCount: secilmisMarka[index]["likeCount"],
-                                updateDate: secilmisMarka[index]["eklenmeTarihi"],
-                              );
-                            },
-                          ),
-                        ),
-                      );
-                    }
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  })
+                  }
+                  )
 
         ],
       ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyColors{
   Color appBarColor = const Color(0xff69a1e1);
   Color textColor = const Color(0xFF4177b3);
-  Color titleTextColor = const Color(0xFF4177b3);
+  Color titleTextColor = const Color(0xff0464c7);
   Color priceColor = const Color(0xff043d80);
 
   Color unSelectedIconColor = const Color(0xffaeb9b9);

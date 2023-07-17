@@ -18,9 +18,9 @@ class FireStoreDB extends ChangeNotifier{
 
   final user = FirebaseAuth.instance.currentUser;
 
-  Future getVehicle(bool listType )async{
+  Future getVehicle(bool listType,bool artan,String selectField)async{
     try{
-      await collectionRef.get().then((querySnaps) {
+      await collectionRef.orderBy(selectField,descending: artan).get().then((querySnaps) {
         for(var result in querySnaps.docs){
           vehicleList.add(result.data());
         }
@@ -64,9 +64,9 @@ class FireStoreDB extends ChangeNotifier{
     }
   }
 
-  Future getMarka(bool listType )async{
+  Future getMarka(bool listType,bool azalan)async{
     try{
-      await collectionRefMarka.get().then((querySnaps) {
+      await collectionRefMarka.orderBy("MarkaAdi",descending: azalan).get().then((querySnaps) {
         for(var result in querySnaps.docs){
           markaList.add(result.data());
         }

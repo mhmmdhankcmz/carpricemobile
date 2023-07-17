@@ -19,7 +19,9 @@ class _FavoritePageState extends State<FavoritePage> {
   bool listType = false;
   List veriList = [];
   List favNumber = [];
+  List selectField = ["Marka","Model","AracFiyat"];
   late bool login ;
+  bool artan = false;
 
   bool loggedIn(){
     if(user == null){
@@ -105,7 +107,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                       onTap: () {
                                         Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetails(aracID: veriList[index]["AracID"], vehicleType: veriList[index]["VasitaTipi"], caseType: veriList[index]["KasaTipi"], name: veriList[index]["Marka"], model: veriList[index]["Model"], imagePath: veriList[index]["AracResimUrl"], description: veriList[index]["AracOzellikleri"], price: veriList[index]["AracFiyat"], isLiked: veriList[index]["isLiked"], likeCount: favNumber[index]["likeCount"], updateDate: veriList[index]["eklenmeTarihi"],)));
                                       },
-                                      subtitle: FutureBuilder(future: FireStoreDB().getVehicle(listType),
+                                      subtitle: FutureBuilder(future: FireStoreDB().getVehicle(listType,artan,selectField[0]),
                                         builder: (context, snap) {
                                           if (snap.hasError) {
                                             return const Text("Birşeyler Yanlış gitti");
