@@ -6,7 +6,6 @@ import 'package:carpricemobile/widgets/my_%C4%B1nfo.dart';
 import 'package:carpricemobile/widgets/profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-
 import '../widgets/numbers_widget.dart';
 
 
