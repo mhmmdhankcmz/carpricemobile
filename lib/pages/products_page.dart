@@ -134,46 +134,43 @@ class _ProductsPageState extends State<ProductsPage> {
                   visible: !isSearch,
                   child: Padding(
                     padding: const EdgeInsets.only(right: 25, top: 8, bottom: 8),
-                    child: Stack(children:[
-
-                      DropdownButton(borderRadius: BorderRadius.circular(5),
-                        dropdownColor: MyColors().iconColor,
-                        items:  [
-                        DropdownMenuItem(value: 'az',onTap: (){
-                          setState(() {
-                            filtering = !filtering;
-                            markayaAscOrDesc = !markayaAscOrDesc;
-                              selectedField = 0;
-                              print(selectField[selectedField]);
-                          });
-                        },child: markayaAscOrDesc?  Text("Markaya göre A dan Z ye",style: Theme.of(context).textTheme.labelMedium,) : Text("Markaya göre Z den-A ya",style: Theme.of(context).textTheme.labelMedium,),),
-
-                        DropdownMenuItem( onTap: (){
-                          setState(() {
-                            modeleAscOrDesc = !modeleAscOrDesc;
-                            selectedField = 1;
+                    child: DropdownButton(isDense: true,borderRadius: BorderRadius.circular(5),
+                      dropdownColor: MyColors().iconColor,
+                      items:  [
+                      DropdownMenuItem(value: 'az',onTap: (){
+                        setState(() {
+                          filtering = !filtering;
+                          markayaAscOrDesc = !markayaAscOrDesc;
+                            selectedField = 0;
                             print(selectField[selectedField]);
-                          });
-                        },value: 'modelAscOrDesc',child: modeleAscOrDesc ? Text("Modele göre Z den- A ya",style: Theme.of(context).textTheme.labelMedium,) :Text("Modele göre  A dan - Z ye",style: Theme.of(context).textTheme.labelMedium,) ,),
+                        });
+                      },child: markayaAscOrDesc?  Text("Markaya göre A dan Z ye",style: Theme.of(context).textTheme.labelMedium,) : Text("Markaya göre Z den-A ya",style: Theme.of(context).textTheme.labelMedium,),),
 
-                        DropdownMenuItem(onTap: (){
-                          setState(() {
-                            priceAscOrDesc = !priceAscOrDesc;
-                            selectedField =2;
-                            print(selectField[selectedField]);
-                          });
+                      DropdownMenuItem( onTap: (){
+                        setState(() {
+                          modeleAscOrDesc = !modeleAscOrDesc;
+                          selectedField = 1;
+                          print(selectField[selectedField]);
+                        });
+                      },value: 'modelAscOrDesc',child: modeleAscOrDesc ? Text("Modele göre Z den- A ya",style: Theme.of(context).textTheme.labelMedium,) :Text("Modele göre  A dan - Z ye",style: Theme.of(context).textTheme.labelMedium,) ,),
 
-                        },value: 'priceAscOrDesc',child: priceAscOrDesc ? Text("Fiyata göre önce en ucuz",style: Theme.of(context).textTheme.labelMedium,) : Text("Fiyata göre önce en pahalı",style: Theme.of(context).textTheme.labelMedium,),
-                        ),
+                      DropdownMenuItem(onTap: (){
+                        setState(() {
+                          priceAscOrDesc = !priceAscOrDesc;
+                          selectedField =2;
+                          print(selectField[selectedField]);
+                        });
 
-                      ], onChanged: dropdownCallBack,
-                        icon: const Icon(Icons.filter_list,color: Colors.black),
-                        // iconSize: 25,
-
-
-                      style: GoogleFonts.patuaOne(color: MyColors().iconColor),
+                      },value: 'priceAscOrDesc',child: priceAscOrDesc ? Text("Fiyata göre önce en ucuz",style: Theme.of(context).textTheme.labelMedium,) : Text("Fiyata göre önce en pahalı",style: Theme.of(context).textTheme.labelMedium,),
                       ),
-                    ]  ),
+
+                    ], onChanged: dropdownCallBack,
+                      icon: const Icon(Icons.filter_list,color: Colors.black),
+                      // iconSize: 25,
+
+
+                    style: GoogleFonts.patuaOne(color: MyColors().iconColor),
+                    ),
                   ),
                 ),
 

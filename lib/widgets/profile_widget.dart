@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carpricemobile/services/auth_service.dart';
 import 'package:carpricemobile/services/firestore_service.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:provider/provider.dart';
 
 class ProfileWidget extends StatefulWidget {
@@ -43,9 +44,11 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     return ClipOval(
       child: Material(elevation: 500,shadowColor: Colors.grey,
         color: Colors.transparent,
-        child: CachedNetworkImage(imageUrl: image,width: 150,height: 150,fit:BoxFit.cover,placeholder: (context, url) {
+        child: InstaImageViewer(
+          child: CachedNetworkImage(imageUrl: image,width: 150,height: 150,fit:BoxFit.fitWidth,placeholder: (context, url) {
       return Image.asset("lib/images/place_holder.png",height: 100, fit: BoxFit.fitHeight,);}
     ),
+        ),
       ),
     );
   }
@@ -65,6 +68,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   child: Consumer(builder: (context, value, child) {
                     return  IconButton(icon: const Icon(Icons.upload,size: 50,), onPressed: () {
                       AuthService().pickUploadImage(FireStoreDB().user?.uid);
+                      setState(() {
+
+                      });
                     }
                     );
                   }

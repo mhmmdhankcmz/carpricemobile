@@ -3,9 +3,11 @@ import 'package:carpricemobile/design_config/color.dart';
 import 'package:carpricemobile/pages/profile_page.dart';
 import 'package:carpricemobile/services/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
 
 import '../widgets/my_appbar.dart';
 
@@ -90,6 +92,7 @@ class _ProductDetailsState extends State<ProductDetails> {
    }
   }
 
+
   Future deleteToFavorite() async {
     if(user == null){
       beLogin();
@@ -116,13 +119,10 @@ class _ProductDetailsState extends State<ProductDetails> {
           }
       );
     }
-
-
-
-
-
-
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -174,11 +174,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: CachedNetworkImage(fit: BoxFit.fitHeight,imageUrl: widget.imagePath,errorWidget: (context, url, error) => const Icon(Icons.error_outline),
-                              placeholder: (context, url) {
-                                return Image.asset("lib/images/place_holder.png",height: 100, fit: BoxFit.fitWidth,);
-                              })),
+                            borderRadius: BorderRadius.circular(12),
+                            child: InstaImageViewer(
+                              child: CachedNetworkImage(imageUrl: widget.imagePath,errorWidget: (context, url, error) => const Icon(Icons.error_outline),
+                                  placeholder: (context, url) {
+                                    return Image.asset("lib/images/place_holder.png",height: 100, fit: BoxFit.fitWidth,);
+                                  }),
+                            )),
+
                     ),
                     divider(),
                     RichText(

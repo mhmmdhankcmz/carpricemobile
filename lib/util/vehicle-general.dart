@@ -3,6 +3,7 @@ import 'package:carpricemobile/design_config/color.dart';
 import 'package:carpricemobile/pages/page_details.dart';
 import 'package:flutter/material.dart';
 
+
 class VehicleGeneral extends StatelessWidget {
   final String carImagePath;
   final String vehicleType;
